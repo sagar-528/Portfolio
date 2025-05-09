@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gray-50;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text;
+}
+
+.hero-gradient {
+  @apply bg-gradient-to-br from-primary-900 to-gray-900;
+}
+
+.card-hover {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.card-hover:hover {
+  @apply transform -translate-y-1 shadow-xl;
+}
+
+.typewriter {
+  @apply overflow-hidden border-r-2 border-primary-500 whitespace-nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold mb-4;
+}
+
+.section-divider {
+  @apply w-20 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto;
+}
+
+.skill-bar {
+  @apply h-2 rounded-full bg-gray-200 overflow-hidden;
+}
+
+.skill-progress {
+  @apply h-full rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-1000 ease-in-out;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: theme('colors.primary.500') }
+}
