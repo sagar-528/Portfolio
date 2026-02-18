@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
 import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,13 +13,8 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -26,15 +22,31 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { name: 'Home', to: 'home' },
     { name: 'About', to: 'about' },
+    { name: 'Journey', to: 'journey' },
     { name: 'Skills', to: 'skills' },
     { name: 'Projects', to: 'projects' },
     { name: 'Contact', to: 'contact' },
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white'}`}>
+    <nav
+      className={`fixed w-full z-50 transition-all duration-500 ${scrolled
+          ? 'py-2'
+          : 'py-3'
+        }`}
+      style={{
+        background: scrolled
+          ? 'rgba(10, 10, 26, 0.8)'
+          : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled
+          ? '1px solid rgba(255,255,255,0.06)'
+          : '1px solid transparent',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+        <div className="flex justify-between h-14 items-center">
           <div className="flex items-center">
             <span className="text-xl font-bold gradient-text">Sagar Gupta</span>
           </div>
@@ -47,39 +59,55 @@ const Navbar: React.FC = () => {
                 smooth={true}
                 offset={-70}
                 duration={500}
-                className="relative text-gray-700 hover:text-primary-600 cursor-pointer transition-colors duration-100 pb-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-primary-600 after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
-                activeClass="text-primary-600 after:scale-x-100"
+                className="relative text-gray-400 hover:text-white cursor-pointer transition-colors duration-300 pb-1 text-sm tracking-wide uppercase after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:bg-gradient-to-r after:from-primary-400 after:to-secondary-400 after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
+                activeClass="text-white after:scale-x-100"
               >
                 {link.name}
               </Link>
             ))}
           </div>
           <div className="md:hidden flex items-center">
-            <button onClick={toggleMenu} className="text-gray-700">
+            <button onClick={toggleMenu} className="text-gray-300 hover:text-white transition-colors">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </div>
-      
-      {/* Mobile menu */}
-      <div className={`md:hidden bg-white py-2 px-4 shadow-lg transition-all duration-300 ${isOpen ? 'block' : 'hidden'}`}>
-        {navLinks.map((link) => (
-          <Link
-            key={link.to}
-            to={link.to}
-            spy={true}
-            smooth={true}
-            offset={-70}
-            duration={500}
-            className="block relative py-2 text-gray-700 hover:text-primary-600 cursor-pointer transition-colors duration-200 after:content-[''] after:absolute after:bottom-[calc(0.5rem)] after:left-0 after:h-[2px] after:w-full after:bg-primary-600 after:scale-x-0 after:origin-left after:transition-transform after:duration-300"
-            activeClass="text-primary-600 after:scale-x-100"
-            onClick={() => setIsOpen(false)}
+
+      {/* Mobile menu — glass panel */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden py-4 px-6"
+            style={{
+              background: 'rgba(10, 10, 26, 0.95)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderBottom: '1px solid rgba(255,255,255,0.06)',
+            }}
           >
-            {link.name}
-          </Link>
-        ))}
-      </div>
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+                className="block py-3 text-gray-400 hover:text-white cursor-pointer transition-colors duration-200 text-sm tracking-wide uppercase border-b border-white/5 last:border-0"
+                activeClass="text-white"
+                onClick={() => setIsOpen(false)}
+              >
+                {link.name}
+              </Link>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

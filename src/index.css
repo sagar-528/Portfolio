@@ -2,57 +2,227 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===========================
+   Global Dark Theme Base
+   =========================== */
+
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  @apply bg-gray-50;
+  background: #0a0a1a;
+  color: #e2e8f0;
 }
 
+/* ===========================
+   Typography & Accents
+   =========================== */
+
 .gradient-text {
-  @apply bg-gradient-to-r from-primary-500 to-secondary-500 text-transparent bg-clip-text;
+  @apply bg-gradient-to-r from-primary-400 to-secondary-400 text-transparent bg-clip-text;
 }
 
 .hero-gradient {
-  @apply bg-gradient-to-br from-primary-900 to-gray-900;
+  background: linear-gradient(135deg, #0a0a1a 0%, #111827 40%, #1e1b4b 100%);
 }
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold mb-4 text-white;
+}
+
+.section-divider {
+  @apply w-20 h-1 rounded-full mx-auto;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+/* ===========================
+   Glassmorphism Utilities
+   =========================== */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15), 0 0 0 1px rgba(99, 102, 241, 0.1);
+  transform: translateY(-4px);
+}
+
+/* ===========================
+   Card Hover (legacy compat)
+   =========================== */
 
 .card-hover {
   @apply transition-all duration-300 ease-in-out;
 }
 
 .card-hover:hover {
-  @apply transform -translate-y-1 shadow-xl;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(99, 102, 241, 0.15);
 }
+
+/* ===========================
+   Typewriter
+   =========================== */
 
 .typewriter {
-  @apply overflow-hidden border-r-2 border-primary-500 whitespace-nowrap;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  @apply border-r-2 border-primary-400 whitespace-nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing 2.5s steps(24, end) forwards, blink-caret 0.75s step-end infinite;
 }
 
-.section-title {
-  @apply text-3xl md:text-4xl font-bold mb-4;
-}
-
-.section-divider {
-  @apply w-20 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 mx-auto;
-}
+/* ===========================
+   Skill Bars
+   =========================== */
 
 .skill-bar {
-  @apply h-2 rounded-full bg-gray-200 overflow-hidden;
+  @apply h-2.5 rounded-full overflow-hidden;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .skill-progress {
-  @apply h-full rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-1000 ease-in-out;
+  @apply h-full rounded-full;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.5);
 }
 
+/* ===========================
+   Scrollytelling Utilities
+   =========================== */
+
+.journey-chapter-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.journey-chapter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.5s ease-out;
+}
+
+.journey-chapter-exit {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease-in;
+}
+
+.parallax-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.img-blur-load {
+  filter: blur(10px);
+  transition: filter 0.4s ease;
+}
+
+.img-blur-load.loaded {
+  filter: blur(0);
+}
+
+/* ===========================
+   Keyframe Animations
+   =========================== */
+
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: max-content;
+  }
 }
 
 @keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: theme('colors.primary.500') }
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: theme('colors.primary.400');
+  }
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  50% {
+    box-shadow: 0 0 20px currentColor;
+  }
+}
+
+.glow-dot {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes blob-move {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
 }
