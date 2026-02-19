@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Instagram } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
@@ -34,15 +34,17 @@ const Footer: React.FC = () => {
               >
                 <Github size={24} />
               </a>
+              <a
+                href="https://www.instagram.com/gupta.sagar528/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-500 hover:text-white transition-colors hover:scale-110 transform duration-300"
+                aria-label="Instagram Profile"
+              >
+                <Instagram size={24} />
+              </a>
             </div>
           </div>
-        </div>
-
-        <div className="border-t border-white/5 mt-10 pt-8 text-center">
-          <p className="text-xs text-gray-600">
-            &copy; {new Date().getFullYear()} Sagar Gupta. All Rights Reserved.
-            <span className="hidden sm:inline"> • Designed with 💜 & React Native</span>
-          </p>
         </div>
       </div>
     </footer>

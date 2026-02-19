@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Linkedin, Github, Send, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Send, MessageSquare } from 'lucide-react';
 import ScrollReveal from '../scroll/ScrollReveal';
+
+const CONTACT_EMAIL = 'gupta.sagar528@gmail.com';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -19,23 +21,25 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const serviceID = import.meta.env.VITE_SERVICE_ID as string;
-    const templateID = import.meta.env.VITE_TEMPLATE_ID as string;
-    const userID = import.meta.env.VITE_USER_ID as string;
+    const serviceID = import.meta.env.VITE_SERVICE_ID;
+    const templateID = import.meta.env.VITE_TEMPLATE_ID;
+    const userID = import.meta.env.VITE_USER_ID;
 
-    console.log('Using Template ID:', templateID);
+    if (!serviceID || !templateID || !userID) {
+      alert('Contact form is not configured. Please set VITE_SERVICE_ID, VITE_TEMPLATE_ID, and VITE_USER_ID in your environment.');
+      return;
+    }
 
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
       subject: formData.subject,
       message: formData.message,
-      email: "gupta.sagar528@gmail.com",
+      email: CONTACT_EMAIL,
     };
 
     try {
       await emailjs.send(serviceID, templateID, templateParams, userID);
-      console.log('Email sent successfully via EmailJS!');
       alert('Message sent successfully!');
       setFormData({
         name: '',
@@ -44,7 +48,9 @@ const Contact: React.FC = () => {
         message: ''
       });
     } catch (error) {
-      console.error('Failed to send email via EmailJS:', error);
+      if (import.meta.env.DEV) {
+        console.error('Failed to send email via EmailJS:', error);
+      }
       alert('Failed to send message. Please try again.');
     }
   };
@@ -84,7 +90,7 @@ const Contact: React.FC = () => {
 
               <div className="space-y-8">
                 {[
-                  { icon: Mail, label: 'Email', value: 'guptasagar123@gmail.com', color: 'text-primary-400', bg: 'bg-primary-500/10' },
+                  { icon: Mail, label: 'Email', value: CONTACT_EMAIL, color: 'text-primary-400', bg: 'bg-primary-500/10' },
                   { icon: Phone, label: 'Phone', value: '+91 9834619561', color: 'text-secondary-400', bg: 'bg-secondary-500/10' },
                   { icon: MapPin, label: 'Location', value: 'Pune Maharashtra, India', color: 'text-green-400', bg: 'bg-green-500/10' }
                 ].map((item, index) => (
@@ -106,6 +112,7 @@ const Contact: React.FC = () => {
                   {[
                     { icon: Linkedin, href: 'https://www.linkedin.com/in/sagar-gupta-655271187', color: 'hover:bg-[#0077B5]' },
                     { icon: Github, href: 'https://github.com/sagar-528', color: 'hover:bg-[#333]' },
+                    { icon: Instagram, href: 'https://www.instagram.com/gupta.sagar528/', color: 'hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-600' },
                   ].map((social, index) => (
                     <motion.a
                       key={index}

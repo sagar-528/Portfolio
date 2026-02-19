@@ -25,14 +25,15 @@ const Navbar: React.FC = () => {
     { name: 'Journey', to: 'journey' },
     { name: 'Skills', to: 'skills' },
     { name: 'Projects', to: 'projects' },
+    { name: 'Experience', to: 'experience' },
     { name: 'Contact', to: 'contact' },
   ];
 
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-500 ${scrolled
-          ? 'py-2'
-          : 'py-3'
+          ? 'py-1.5 sm:py-2'
+          : 'py-2 sm:py-3'
         }`}
       style={{
         background: scrolled
@@ -46,9 +47,9 @@ const Navbar: React.FC = () => {
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-14 items-center">
-          <div className="flex items-center">
-            <span className="text-xl font-bold gradient-text">Sagar Gupta</span>
+        <div className="flex justify-between h-12 sm:h-14 items-center">
+          <div className="flex items-center min-w-0">
+            <span className="text-lg sm:text-xl font-bold gradient-text truncate">Sagar Gupta</span>
           </div>
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
@@ -66,9 +67,9 @@ const Navbar: React.FC = () => {
               </Link>
             ))}
           </div>
-          <div className="md:hidden flex items-center">
-            <button onClick={toggleMenu} className="text-gray-300 hover:text-white transition-colors">
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+          <div className="md:hidden flex items-center shrink-0">
+            <button onClick={toggleMenu} className="p-2 -m-2 text-gray-300 hover:text-white transition-colors touch-manipulation" aria-label={isOpen ? 'Close menu' : 'Open menu'}>
+              {isOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>

@@ -88,7 +88,9 @@ const Projects: React.FC = () => {
         <ScrollReveal direction="up" delay={0.3}>
           <div className="text-center mt-16">
             <a
-              href="#"
+              href="https://github.com/sagar-528?tab=repositories"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center px-8 py-3.5 bg-white/5 border border-white/10 rounded-full text-white font-medium hover:bg-white/10 hover:border-primary-500/50 transition-all duration-300"
             >
               View All Projects

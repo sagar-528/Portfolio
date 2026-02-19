@@ -34,14 +34,14 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
       onHoverEnd={() => setIsHovered(false)}
     >
       <motion.div
-        className="relative h-full w-full rounded-2xl transition-all duration-500 preserve-3d"
+        className="relative h-full w-full rounded-2xl preserve-3d"
         animate={{ rotateY: isHovered ? 180 : 0 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 260, damping: 20 }}
+        transition={{ type: "spring", stiffness: 120, damping: 28, mass: 0.8 }}
       >
         {/* Front Side */}
-        <div className="absolute inset-0 glass-card p-8 h-full w-full flex flex-col backface-hidden border border-white/10 group-hover:border-primary-500/30 transition-colors duration-300">
-          {/* Glowing accent at top */}
-          <div className={`absolute top-0 inset-x-0 h-1 bg-gradient-to-r ${project.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-2xl`}></div>
+        <div className="absolute inset-0 glass-card p-8 h-full w-full flex flex-col backface-hidden border border-white/10 group-hover:border-primary-500/30 transition-colors duration-300 rounded-2xl overflow-hidden">
+          {/* Subtle top glow on hover (no harsh line) */}
+          <div className={`absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}></div>
 
           <div className="mb-6 relative">
             <div className={`w-14 h-14 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 backdrop-blur-md shadow-lg`}>
@@ -75,9 +75,9 @@ const ProjectCard: React.FC<ProjectProps> = ({ project }) => {
 
         {/* Back Side */}
         <div className="absolute inset-0 h-full w-full rounded-2xl backface-hidden rotateY-180 overflow-hidden">
-          {/* Gradient Background */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-90 backdrop-blur-xl`}></div>
-          <div className="absolute inset-0 bg-black/20"></div>
+          {/* Gradient Background — no top line */}
+          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${project.gradient} opacity-90`}></div>
+          <div className="absolute inset-0 rounded-2xl bg-black/20"></div>
 
           <div className="relative h-full p-8 flex flex-col justify-center items-center text-white z-10">
             <h3 className="text-2xl font-bold mb-4 text-center text-white">{project.title}</h3>

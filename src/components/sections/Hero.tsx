@@ -18,7 +18,7 @@ const Hero: React.FC = () => {
     <section
       id="home"
       ref={sectionRef}
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-[100dvh] flex items-center overflow-hidden pt-20 sm:pt-0"
       style={{
         background: 'linear-gradient(135deg, #0a0a1a 0%, #111827 40%, #1e1b4b 100%)',
       }}
@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
           >
             {/* Greeting badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full mb-4 sm:mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -98,8 +98,8 @@ const Hero: React.FC = () => {
                 border: '1px solid rgba(99, 102, 241, 0.2)',
               }}
             >
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-sm text-gray-300">Available for work</span>
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse shrink-0" />
+              <span className="text-xs sm:text-sm text-gray-300 whitespace-nowrap">Available for work</span>
             </motion.div>
 
             <motion.h1
@@ -182,10 +182,10 @@ const Hero: React.FC = () => {
             className="md:w-1/2 flex justify-center"
             style={{ y: imageY }}
           >
-            <div className="relative w-64 h-64 md:w-80 md:h-80">
+            <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-80 md:h-80 shrink-0">
               {/* Outer orbit ring */}
               <motion.div
-                className="absolute -inset-6 rounded-full"
+                className="absolute -inset-4 sm:-inset-5 md:-inset-6 rounded-full"
                 style={{
                   border: '1px solid rgba(99, 102, 241, 0.15)',
                 }}
@@ -193,7 +193,7 @@ const Hero: React.FC = () => {
                 transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
               >
                 <div
-                  className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full"
                   style={{
                     background: '#6366f1',
                     boxShadow: '0 0 12px #6366f1',
@@ -201,19 +201,17 @@ const Hero: React.FC = () => {
                 />
               </motion.div>
 
-              {/* Glow background */}
+              {/* Glow background — responsive blur and scale */}
               <div
-                className="absolute inset-0 rounded-full"
+                className="absolute inset-0 rounded-full scale-[1.25] sm:scale-[1.3] blur-[20px] sm:blur-[28px] md:blur-[30px]"
                 style={{
                   background: 'radial-gradient(circle, rgba(99, 102, 241, 0.25), transparent 70%)',
-                  filter: 'blur(30px)',
-                  transform: 'scale(1.3)',
                 }}
               />
 
               <motion.img
-                src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
-                alt="Developer"
+                src="/images/Profile_Image.jpeg"
+                alt="Sagar Gupta"
                 className="relative w-full h-full rounded-full object-cover"
                 style={{
                   border: '3px solid rgba(99, 102, 241, 0.4)',
@@ -230,43 +228,42 @@ const Hero: React.FC = () => {
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll indicator — animated mouse */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
-          style={{ opacity: textOpacity }}
-        >
-          <Link
-            to="about"
-            spy={true}
-            smooth={true}
-            offset={-70}
-            duration={500}
-          >
-            <div className="flex flex-col items-center gap-2">
-              <div
-                className="w-6 h-10 rounded-full flex items-start justify-center p-1.5"
-                style={{
-                  border: '2px solid rgba(99, 102, 241, 0.4)',
-                }}
-              >
-                <motion.div
-                  className="w-1.5 h-1.5 rounded-full bg-primary-400"
-                  animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
-                  transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-                />
-              </div>
-              <motion.span
-                className="text-xs text-gray-500 tracking-widest uppercase"
-                animate={{ opacity: [0.3, 0.7, 0.3] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-              >
-                Scroll
-              </motion.span>
-            </div>
-          </Link>
-        </motion.div>
       </div>
+
+      {/* Scroll indicator — fixed at bottom center of hero */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center justify-center w-full pointer-events-none"
+        style={{ opacity: textOpacity }}
+      >
+        <Link
+          to="about"
+          spy={true}
+          smooth={true}
+          offset={-70}
+          duration={500}
+          className="pointer-events-auto flex flex-col items-center gap-2"
+        >
+          <div
+            className="w-6 h-10 rounded-full flex items-start justify-center p-1.5"
+            style={{
+              border: '2px solid rgba(99, 102, 241, 0.4)',
+            }}
+          >
+            <motion.div
+              className="w-1.5 h-1.5 rounded-full bg-primary-400"
+              animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+              transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+            />
+          </div>
+          <motion.span
+            className="text-xs text-gray-500 tracking-widest uppercase"
+            animate={{ opacity: [0.3, 0.7, 0.3] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+          >
+            Scroll
+          </motion.span>
+        </Link>
+      </motion.div>
     </section>
   );
 };

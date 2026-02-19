@@ -142,21 +142,21 @@ const Skills: React.FC = () => {
             </div>
           </ScrollReveal>
 
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap justify-center gap-5 sm:gap-6">
             {techStack.map((tech, index) => (
               <ScrollReveal
                 key={index}
                 direction="zoom"
                 delay={index * 0.08}
               >
-                <div className="group flex flex-col items-center justify-center p-6 glass-card w-32 h-32 cursor-pointer glass-card-hover relative">
-                  <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-
+                <div className="group flex flex-col items-center justify-center p-6 w-32 h-32 sm:w-36 sm:h-36 cursor-pointer relative rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-sm transition-all duration-300 hover:border-primary-500/40 hover:bg-white/[0.08] hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.35)] hover:-translate-y-1">
+                  {/* Soft glow behind icon on hover */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 to-secondary-500/0 group-hover:from-primary-500/10 group-hover:to-secondary-500/5 transition-all duration-300 pointer-events-none" />
                   <TechIcon
                     name={tech.icon}
-                    className="text-4xl mb-3 text-gray-400 group-hover:text-white transition-colors duration-300 drop-shadow-lg"
+                    className="relative z-10 text-4xl sm:text-5xl mb-3 text-gray-500 group-hover:text-white transition-all duration-300 group-hover:scale-110"
                   />
-                  <span className="text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
+                  <span className="relative z-10 text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
                     {tech.name}
                   </span>
                 </div>

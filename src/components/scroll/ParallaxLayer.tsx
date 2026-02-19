@@ -28,7 +28,7 @@ const ParallaxLayer: React.FC<ParallaxLayerProps> = ({
         direction === 'vertical' ? { y: transform } : { x: transform };
 
     return (
-        <div ref={ref} className={`relative overflow-hidden ${className}`}>
+        <div ref={ref} className={`relative overflow-x-clip ${className}`}>
             <motion.div style={style}>{children}</motion.div>
         </div>
     );

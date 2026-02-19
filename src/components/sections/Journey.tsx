@@ -89,14 +89,15 @@ const Journey: React.FC = () => {
     // Timeline progress line
     const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
-    // Preload lottie data
-    const [lottieData, setLottieData] = useState<Record<number, unknown>>({});
+    // Preload lottie data (Lottie JSON object)
+    type LottieJson = object;
+    const [lottieData, setLottieData] = useState<Record<number, LottieJson>>({});
 
     useEffect(() => {
         chapters.forEach((chapter, index) => {
             fetch(chapter.lottieUrl)
                 .then((res) => res.json())
-                .then((data) => {
+                .then((data: LottieJson) => {
                     setLottieData((prev) => ({ ...prev, [index]: data }));
                 })
                 .catch(() => {
@@ -124,8 +125,8 @@ const Journey: React.FC = () => {
 
                 {/* Content container */}
                 <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col">
-                    {/* Title row */}
-                    <div className="pt-16 pb-8 text-center">
+                    {/* Title row — extra top padding to clear fixed navbar */}
+                    <div className="pt-24 sm:pt-28 md:pt-32 pb-8 text-center">
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                             My <span className="gradient-text">Journey</span>
                         </h2>

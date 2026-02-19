@@ -29,7 +29,7 @@ const ExperienceCard: React.FC<ExperienceProps> = ({ experience, index }) => {
 
       <div className="hidden md:flex md:w-0 justify-center items-start absolute left-1/2 top-0 -translate-x-1/2">
         <motion.div
-          className={`w-4 h-4 rounded-full border-2 border-[#0a0a1a] shadow-[0_0_10px_currentColor] z-20 ${experience.period.includes('Present') ? 'bg-primary-500 text-primary-500' : 'bg-secondary-500 text-secondary-500'}`}
+          className={`w-4 h-4 rounded-full border-2 border-[#0a0a1a] shadow-[0_0_10px_currentColor] z-20 ${(experience.period.includes('Present') || experience.period.includes('Current')) ? 'bg-primary-500 text-primary-500' : 'bg-secondary-500 text-secondary-500'}`}
           initial={{ scale: 0 }}
           whileInView={{ scale: 1.5 }}
           viewport={{ once: true }}
