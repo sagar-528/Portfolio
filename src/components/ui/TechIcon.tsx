@@ -1,11 +1,7 @@
 import React from 'react';
-import { 
-  Database, 
-  Github, 
-  ServerCog, // Note: ServerCog wasn't used, PenTool neither
-  Cloud, 
+import {
+  Database,
   CircuitBoard,
-  // PenTool // Not used
 } from 'lucide-react';
 // Import icons from react-icons
 import { DiJavascript1 } from 'react-icons/di';
