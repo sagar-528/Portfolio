@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
 import ScrollProgress from './components/scroll/ScrollProgress';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/sections/Hero';
@@ -12,18 +13,20 @@ import Footer from './components/layout/Footer';
 
 function App() {
   return (
-    <div className="font-['Poppins']">
-      <ScrollProgress />
-      <Navbar />
-      <Hero />
-      <About />
-      <Journey />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Contact />
-      <Footer />
-    </div>
+    <ErrorBoundary>
+      <div className="font-['Poppins']">
+        <ScrollProgress />
+        <Navbar />
+        <Hero />
+        <About />
+        <Journey />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Contact />
+        <Footer />
+      </div>
+    </ErrorBoundary>
   );
 }
 
