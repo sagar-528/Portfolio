@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Send, MessageSquare } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Instagram, Send, MessageSquare, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import ScrollReveal from '../scroll/ScrollReveal';
 
 const CONTACT_EMAIL = 'gupta.sagar528@gmail.com';
+
+type FormStatus = 'idle' | 'loading' | 'success' | 'error' | 'misconfigured';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -13,10 +15,12 @@ const Contact: React.FC = () => {
     subject: '',
     message: ''
   });
+  const [status, setStatus] = useState<FormStatus>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (status !== 'idle') setStatus('idle');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,9 +30,11 @@ const Contact: React.FC = () => {
     const userID = import.meta.env.VITE_USER_ID;
 
     if (!serviceID || !templateID || !userID) {
-      alert('Contact form is not configured. Please set VITE_SERVICE_ID, VITE_TEMPLATE_ID, and VITE_USER_ID in your environment.');
+      setStatus('misconfigured');
       return;
     }
+
+    setStatus('loading');
 
     const templateParams = {
       from_name: formData.name,
@@ -40,20 +46,17 @@ const Contact: React.FC = () => {
 
     try {
       await emailjs.send(serviceID, templateID, templateParams, userID);
-      alert('Message sent successfully!');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
+      setStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
       if (import.meta.env.DEV) {
         console.error('Failed to send email via EmailJS:', error);
       }
-      alert('Failed to send message. Please try again.');
+      setStatus('error');
     }
   };
+
+  const isLoading = status === 'loading';
 
   return (
     <section id="contact" className="py-24 bg-[#0b0b1e] relative overflow-hidden">
@@ -150,6 +153,7 @@ const Contact: React.FC = () => {
                     className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder="John Doe"
                     required
+                    disabled={isLoading}
                   />
                 </div>
                 <div>
@@ -163,6 +167,7 @@ const Contact: React.FC = () => {
                     className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                     placeholder="john@example.com"
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -177,6 +182,7 @@ const Contact: React.FC = () => {
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                   placeholder="Project Inquiry"
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div>
@@ -190,15 +196,53 @@ const Contact: React.FC = () => {
                   className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all resize-none"
                   placeholder="Tell me about your project..."
                   required
+                  disabled={isLoading}
                 ></textarea>
               </div>
+
+              {/* Inline status message */}
+              <AnimatePresence>
+                {status === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-green-400 text-sm"
+                  >
+                    <CheckCircle size={16} /> Message sent successfully! I'll get back to you soon.
+                  </motion.div>
+                )}
+                {(status === 'error' || status === 'misconfigured') && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-red-400 text-sm"
+                  >
+                    <AlertCircle size={16} />
+                    {status === 'misconfigured'
+                      ? 'Contact form is not configured. Please reach out directly via email.'
+                      : 'Failed to send message. Please try again or contact me directly.'}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <motion.button
                 type="submit"
-                className="w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-lg shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2 hover:shadow-primary-500/50 transition-all"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={isLoading}
+                className="w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-lg shadow-lg shadow-primary-500/30 flex items-center justify-center gap-2 hover:shadow-primary-500/50 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                whileHover={isLoading ? {} : { scale: 1.02 }}
+                whileTap={isLoading ? {} : { scale: 0.98 }}
               >
-                <Send size={20} /> Send Message
+                {isLoading ? (
+                  <>
+                    <Loader size={20} className="animate-spin" /> Sending…
+                  </>
+                ) : (
+                  <>
+                    <Send size={20} /> Send Message
+                  </>
+                )}
               </motion.button>
             </form>
           </motion.div>
