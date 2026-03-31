@@ -96,7 +96,10 @@ const Journey: React.FC = () => {
     useEffect(() => {
         chapters.forEach((chapter, index) => {
             fetch(chapter.lottieUrl)
-                .then((res) => res.json())
+                .then((res) => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
                 .then((data: LottieJson) => {
                     setLottieData((prev) => ({ ...prev, [index]: data }));
                 })
@@ -104,6 +107,7 @@ const Journey: React.FC = () => {
                     // Silently fail — animation won't show
                 });
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
