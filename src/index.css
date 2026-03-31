@@ -79,13 +79,24 @@ body {
    Typewriter
    =========================== */
 
+@keyframes typing {
+  from { width: 0 }
+  to { width: max-content }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #6366f1 }
+}
+
 .typewriter {
   @apply border-r-2 border-primary-400 whitespace-nowrap;
   overflow: hidden;
   width: 0;
   /* shift slightly left so the right-edge blinker sits closer to the last letter */
   transform: translateX(-0.15em);
-  animation: typing 2.5s steps(24, end) forwards, blink-caret 0.75s step-end infinite;
+  /* steps(22) matches "React Native Developer" — 22 characters */
+  animation: typing 2.5s steps(22, end) forwards, blink-caret 0.75s step-end infinite;
 }
 
 /* ===========================
