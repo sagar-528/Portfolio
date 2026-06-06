@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -7,6 +7,13 @@ function scrollTo(id: string) {
 const SOCIALS = [
   { icon: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/sagar-gupta-655271187/' },
   { icon: 'github',   label: 'GitHub',   href: 'https://github.com/sagar-528' },
+];
+
+const ROLES = [
+  'Senior React Native Developer',
+  'Mobile Architect',
+  'BFSI Specialist',
+  'Cross-Platform Engineer',
 ];
 
 function LinkedInIcon() {
@@ -26,6 +33,44 @@ function ArrowIcon() {
 }
 function PhoneIcon() {
   return <svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>;
+}
+
+function TypingRole() {
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) {
+      const t = setTimeout(() => { setPaused(false); setDeleting(true); }, 1800);
+      return () => clearTimeout(t);
+    }
+    const full = ROLES[roleIdx];
+    if (!deleting) {
+      if (displayed.length < full.length) {
+        const t = setTimeout(() => setDisplayed(full.slice(0, displayed.length + 1)), 68);
+        return () => clearTimeout(t);
+      } else {
+        setPaused(true);
+      }
+    } else {
+      if (displayed.length > 0) {
+        const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 38);
+        return () => clearTimeout(t);
+      } else {
+        setDeleting(false);
+        setRoleIdx(i => (i + 1) % ROLES.length);
+      }
+    }
+  }, [displayed, deleting, paused, roleIdx]);
+
+  return (
+    <span className="hero-role">
+      {displayed}
+      <span className="hero-cursor" aria-hidden="true">|</span>
+    </span>
+  );
 }
 
 const HERO_METRICS = [
@@ -75,7 +120,9 @@ export default function Hero() {
           <h1 className="hero-title">
             Sagar<br />Gupta
           </h1>
-          <p className="hero-role">Senior React Native Developer</p>
+
+          <TypingRole />
+
           <p className="hero-tag">
             Building high-performance, secure cross-platform mobile apps for enterprise scale.
             Trusted by 10M+ users in the BFSI domain.
@@ -104,7 +151,9 @@ export default function Hero() {
           <div className="hero-socials">
             {SOCIALS.map(({ icon, label, href }) => (
               <a key={label} href={href} target="_blank" rel="noreferrer" className="hero-social">
-                {icon === 'linkedin' ? <LinkedInIcon /> : <GitHubIcon />}
+                <span className="hero-social-icon">
+                  {icon === 'linkedin' ? <LinkedInIcon /> : <GitHubIcon />}
+                </span>
                 {label}
               </a>
             ))}
@@ -122,7 +171,7 @@ export default function Hero() {
         </div>
 
         <div className="hero-portrait">
-          <div className="portrait-frame">
+          <div className="portrait-frame portrait-float">
             <img
               src="/images/Profile_Image.jpeg"
               alt="Sagar Gupta"
