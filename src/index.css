@@ -110,7 +110,7 @@ section { position: relative; z-index: 1; }
 }
 
 /* ── Section layout ── */
-.section-head { margin-bottom: clamp(40px, 7vw, 72px); }
+.section-head { margin-bottom: clamp(24px, 3.5vw, 44px); }
 .section-head h2 {
   font-size: clamp(32px, 4.8vw, 52px);
   font-weight: 800;
@@ -125,7 +125,7 @@ section { position: relative; z-index: 1; }
   font-size: 17px;
   font-weight: 400;
 }
-.section-pad { padding-block: clamp(88px, 12vw, 160px); }
+.section-pad { padding-block: clamp(52px, 7vw, 96px); }
 
 /* ── Reveal animation ── */
 .reveal {
@@ -342,7 +342,7 @@ body.preloading { overflow: hidden; }
 
 .hero-inner {
   position: relative; z-index: 2;
-  display: grid; grid-template-columns: 1.3fr 0.8fr; gap: clamp(32px, 6vw, 88px);
+  display: grid; grid-template-columns: 1.3fr 0.8fr; gap: clamp(24px, 4vw, 60px);
   align-items: center; width: 100%;
 }
 
@@ -490,7 +490,7 @@ body.preloading { overflow: hidden; }
    ============================================================ */
 .about-grid {
   display: grid; grid-template-columns: 1fr 1.15fr;
-  gap: clamp(36px, 7vw, 100px); align-items: start;
+  gap: clamp(24px, 4vw, 64px); align-items: start;
 }
 .about-lead { position: sticky; top: 100px; }
 .about-h {
@@ -698,8 +698,8 @@ body.preloading { overflow: hidden; }
 /* ============================================================
    PROJECTS
    ============================================================ */
-.projects { display: flex; flex-direction: column; gap: clamp(64px, 10vw, 130px); }
-.project { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.projects { display: flex; flex-direction: column; gap: clamp(40px, 6vw, 80px); }
+.project { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(24px, 4vw, 60px); align-items: center; }
 .project--rev .project-phone { order: 2; }
 .project-phone { position: relative; display: flex; justify-content: center; }
 .phone-halo {
@@ -997,7 +997,7 @@ body.preloading { overflow: hidden; }
 /* ============================================================
    CONTACT
    ============================================================ */
-.contact-sec { padding-top: clamp(88px, 12vw, 160px); padding-bottom: 0; overflow: hidden; }
+.contact-sec { padding-top: clamp(52px, 7vw, 96px); padding-bottom: 0; overflow: hidden; }
 .contact-bg { position: absolute; inset: 0; z-index: 0; }
 .contact-glow {
   position: absolute; bottom: -30%; left: 50%; transform: translateX(-50%);
@@ -1032,7 +1032,7 @@ body.preloading { overflow: hidden; }
 /* ============================================================
    FOOTER
    ============================================================ */
-.footer { position: relative; z-index: 1; margin-top: clamp(72px, 11vw, 130px); border-top: 1px solid var(--border); }
+.footer { position: relative; z-index: 1; margin-top: clamp(40px, 5vw, 72px); border-top: 1px solid var(--border); }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 28px; flex-wrap: wrap; }
 .footer-inner .mono { font-size: 12px; color: var(--text-3); }
 
