@@ -138,38 +138,65 @@ const SCREENS: Record<string, (accent: string) => React.ReactNode> = {
   safety:      (a) => <ScreenSafety accent={a} />,
 };
 
+function CheckSmIcon() { return <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round"><path d="M5 12l5 5L20 6"/></svg>; }
+function AlertIcon() { return <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>; }
+function LightbulbIcon() { return <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 015 11.9V17H7v-3.1A7 7 0 0112 2z"/></svg>; }
+function CodeBracketsIcon() { return <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>; }
+
 function CaseStudyPanel({ cs, accent }: { cs: CaseStudy; accent: string }) {
   return (
-    <div className="cs-panel">
-      <div className="cs-row">
-        <div className="cs-block">
-          <h4 className="cs-label mono">Problem</h4>
+    <div className="cs-panel" style={{ '--cs-accent': accent, borderTopColor: accent } as React.CSSProperties}>
+      {/* Header */}
+      <div className="cs-head">
+        <span className="cs-badge mono" style={{ color: accent, borderColor: accent + '44', background: accent + '14' }}>
+          Case Study
+        </span>
+        <span className="cs-head-sub mono">Architecture · Challenges · Decisions</span>
+      </div>
+
+      {/* 2×2 grid */}
+      <div className="cs-grid">
+        <div className="cs-cell">
+          <div className="cs-cell-label">
+            <span className="cs-cell-ic" style={{ color: accent, background: accent + '18' }}><AlertIcon /></span>
+            <span className="cs-label mono">Problem</span>
+          </div>
           <p className="cs-text">{cs.problem}</p>
         </div>
-        <div className="cs-block">
-          <h4 className="cs-label mono">Solution</h4>
+
+        <div className="cs-cell cs-cell--right">
+          <div className="cs-cell-label">
+            <span className="cs-cell-ic" style={{ color: accent, background: accent + '18' }}><LightbulbIcon /></span>
+            <span className="cs-label mono">Solution</span>
+          </div>
           <p className="cs-text">{cs.solution}</p>
         </div>
-      </div>
-      <div className="cs-row cs-row--lists">
-        <div className="cs-block">
-          <h4 className="cs-label mono">Challenges</h4>
+
+        <div className="cs-cell cs-cell--bottom">
+          <div className="cs-cell-label">
+            <span className="cs-cell-ic" style={{ color: accent, background: accent + '18' }}><AlertIcon /></span>
+            <span className="cs-label mono">Challenges</span>
+          </div>
           <ul className="cs-list">
             {cs.challenges.map(c => (
               <li key={c}>
-                <span className="cs-dot" style={{ background: accent }} />
-                <span>{c}</span>
+                <span className="cs-li-dot" style={{ background: accent }} />
+                {c}
               </li>
             ))}
           </ul>
         </div>
-        <div className="cs-block">
-          <h4 className="cs-label mono">Technical decisions</h4>
+
+        <div className="cs-cell cs-cell--right cs-cell--bottom">
+          <div className="cs-cell-label">
+            <span className="cs-cell-ic" style={{ color: accent, background: accent + '18' }}><CodeBracketsIcon /></span>
+            <span className="cs-label mono">Technical decisions</span>
+          </div>
           <ul className="cs-list">
             {cs.decisions.map(d => (
               <li key={d}>
-                <span className="cs-dot" style={{ background: accent }} />
-                <span>{d}</span>
+                <span className="cs-li-dot" style={{ background: accent }} />
+                {d}
               </li>
             ))}
           </ul>
