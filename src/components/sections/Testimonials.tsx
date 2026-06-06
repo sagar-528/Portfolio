@@ -40,7 +40,7 @@ const TESTIMONIALS = [
     company: 'Tata Consultancy Services',
     relation: 'Direct manager · 2+ years',
     initials: 'RM',
-    color: '#22d3ee',
+    color: '#8b5cf6',
   },
   {
     quote: "Working with Sagar on the USAA credit card module gave me a clear view of what elite mobile engineering looks like. His performance work — FlatList virtualization, image caching, Hermes migration — dropped startup time noticeably in production. He brings both the technical depth and the product instinct.",
@@ -49,7 +49,7 @@ const TESTIMONIALS = [
     company: 'Tata Consultancy Services',
     relation: 'Team colleague · 1.5 years',
     initials: 'PN',
-    color: '#818cf8',
+    color: '#22d3ee',
   },
   {
     quote: "Sagar rebuilt our app's foundation at Dev Story from scratch — navigation architecture, state management with Redux Saga, FCM integration, and the full App Store release pipeline. His crash rate work brought us from 92% to 99.2% stability. He's the kind of developer who doesn't just fix bugs, he prevents the next class of them.",

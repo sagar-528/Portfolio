@@ -55,9 +55,7 @@ export default function Hero() {
   return (
     <section id="top" className="hero" ref={heroRef}>
       <div className="hero-bg" aria-hidden="true">
-        <div className="hero-aurora">
-          <span className="au au1" /><span className="au au2" /><span className="au au3" />
-        </div>
+        <div className="hero-mesh" />
         <div className="hero-grid" />
       </div>
 
