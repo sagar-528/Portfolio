@@ -84,6 +84,7 @@ body::before {
 }
 
 a { color: inherit; text-decoration: none; }
+img { max-width: 100%; height: auto; display: block; }
 ::selection { background: rgba(139,92,246,0.35); color: #fff; }
 
 /* ── Layout ── */
@@ -628,6 +629,7 @@ body.preloading { overflow: hidden; }
 
 @media (max-width: 980px) {
   .bento--4  { grid-column: span 6; }
+  .bento--3  { grid-column: span 6; }
   .bento--8  { grid-column: span 12; }
 }
 @media (max-width: 620px) {
@@ -657,12 +659,14 @@ body.preloading { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .tl-marker .live { animation: none; } }
 
 .tl-card {
-  padding: 28px clamp(20px,3vw,32px);
+  padding: 28px clamp(16px,3vw,32px);
   transition: border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
 }
-.tl-card:hover {
-  border-color: var(--accent-line); transform: translateX(4px);
-  box-shadow: 0 16px 40px -16px rgba(139,92,246,0.14);
+@media (hover: hover) and (pointer: fine) {
+  .tl-card:hover {
+    border-color: var(--accent-line); transform: translateX(4px);
+    box-shadow: 0 16px 40px -16px rgba(139,92,246,0.14);
+  }
 }
 .tl-head { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
 .tl-head h3 { font-size: 20px; font-weight: 800; margin: 0; letter-spacing: -0.02em; }
@@ -779,7 +783,7 @@ body.preloading { overflow: hidden; }
 .showcase-tab-short { display: none; }
 @media (max-width: 500px) { .showcase-tab-long { display: none; } .showcase-tab-short { display: inline; } }
 
-.showcase-panel { display: grid; grid-template-columns: 300px 1fr; gap: 36px; align-items: start; }
+.showcase-panel { display: grid; grid-template-columns: 300px 1fr; gap: 36px; align-items: start; padding: clamp(16px, 3vw, 28px); }
 @media (max-width: 800px) { .showcase-panel { grid-template-columns: 1fr; } }
 .showcase-info { padding: 4px 0; }
 .showcase-info h3 { font-size: 20px; font-weight: 700; margin: 0 0 12px; letter-spacing: -0.02em; }
@@ -1061,3 +1065,93 @@ body.preloading { overflow: hidden; }
    ABOUT philosophy cards
    ============================================================ */
 .about-philosophy { display: flex; flex-direction: column; gap: 12px; margin: 22px 0; }
+
+/* ============================================================
+   RESPONSIVE FIXES — comprehensive mobile pass
+   ============================================================ */
+
+/* Chips: allow wrapping on small screens, never clip text */
+.chip { word-break: break-word; }
+
+/* Hero: status bar wraps on narrow phones */
+.hero-status { flex-wrap: wrap; row-gap: 4px; }
+
+/* Portrait frame: cap height on small single-column screens */
+@media (max-width: 480px) {
+  .portrait-frame { max-height: 65vh; }
+  .hero-portrait { max-width: 300px; margin: 0 auto; }
+}
+
+/* About: facts grid collapses to 1-col on narrow phones */
+@media (max-width: 480px) {
+  .about-facts { grid-template-columns: 1fr; }
+  body { font-size: 16px; }
+}
+
+/* Timeline: tighter padding + font on mobile */
+@media (max-width: 600px) {
+  .tl-item { padding-left: 34px; }
+  .tl-head h3 { font-size: 17px; }
+  .tl-summary { font-size: 14.5px; }
+  .tl-points li { font-size: 14px; }
+}
+
+/* Case study panel: tighter side padding on mobile */
+@media (max-width: 600px) {
+  .cs-panel { padding: 20px 16px; gap: 18px; }
+}
+
+/* MobileShowcase: state-flow goes vertical on mobile */
+@media (max-width: 600px) {
+  .state-flow { flex-direction: column; align-items: stretch; gap: 6px; }
+  .state-arrow { transform: rotate(90deg); align-self: center; }
+  .state-node { flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; }
+}
+
+/* MobileShowcase: arch-row--spread wraps on very small screens */
+@media (max-width: 500px) {
+  .arch-row--spread { flex-wrap: wrap; }
+  .arch-box--sys { flex: 1 1 calc(50% - 4px); min-width: 0; }
+}
+
+/* Projects: impact pills tighter on mobile */
+@media (max-width: 480px) {
+  .impact-pill { padding: 8px 10px; }
+  .impact-stat { font-size: 13px; }
+}
+
+/* Bento grid: reduce gap + padding on mobile */
+@media (max-width: 480px) {
+  .bento-grid { gap: 10px; }
+  .bento { padding: 18px; }
+  .bento-title { font-size: 16px; }
+  .bento-number { font-size: 46px; }
+}
+
+/* Open source: repo stats row wraps on mobile */
+@media (max-width: 480px) {
+  .os-repo-footer { flex-wrap: wrap; gap: 8px; }
+}
+
+/* Testimonials: reduce padding on mobile */
+@media (max-width: 480px) {
+  .testi-card { padding: 20px 16px; }
+}
+
+/* Contact: tighter padding on mobile */
+@media (max-width: 480px) {
+  .contact-card { padding: 16px; }
+}
+
+/* Stat cards: reduce font + padding on mobile */
+@media (max-width: 480px) {
+  .stat-card { padding: 20px; }
+  .stat-num { font-size: 38px; }
+  .stat-label { font-size: 14px; }
+}
+
+/* Prevent any absolutely positioned elements from causing overflow */
+@media (max-width: 860px) {
+  .hero-bg, .contact-bg { overflow: hidden; }
+  .phone-halo { opacity: 0.16; }
+}
