@@ -959,30 +959,50 @@ body.preloading { overflow: hidden; }
 /* ============================================================
    TESTIMONIALS
    ============================================================ */
-.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-@media (max-width: 900px) { .testi-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 560px) { .testi-grid { grid-template-columns: 1fr; } }
-.testi-card {
-  display: flex; flex-direction: column; gap: 16px; padding: 28px;
-  border-top: 2px solid var(--testi-color, var(--accent));
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
-  height: 100%;
+/* Featured single testimonial */
+.testi-featured {
+  max-width: 820px; margin: 0 auto;
+  padding: 40px 44px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  background: linear-gradient(160deg, var(--surface) 0%, var(--bg-2) 100%);
+  display: flex; flex-direction: column; gap: 28px;
+  position: relative;
 }
-@media (hover: hover) and (pointer: fine) {
-  .testi-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px -16px rgba(0,0,0,0.4); }
+.testi-featured::before {
+  content: ''; position: absolute; inset: 0; border-radius: 24px;
+  background: linear-gradient(180deg, rgba(139,92,246,0.04) 0%, transparent 40%);
+  pointer-events: none;
 }
-.testi-top { display: flex; justify-content: space-between; align-items: flex-start; }
-.testi-quote { display: flex; color: var(--testi-color, var(--accent)); opacity: 0.55; }
-.testi-stars { display: flex; gap: 2px; color: var(--testi-color, var(--accent)); }
-.testi-text { font-size: 14px; color: var(--text-2); line-height: 1.75; margin: 0; flex: 1; font-style: italic; }
-.testi-author { display: flex; align-items: center; gap: 10px; margin-top: auto; }
+.testi-featured-quote { display: flex; flex-direction: column; gap: 20px; }
+.testi-featured-text {
+  font-size: 17px; color: var(--text-2); line-height: 1.8; margin: 0;
+  font-style: italic;
+}
+.testi-featured-footer { display: flex; flex-direction: column; gap: 16px; }
+.testi-featured-stars { display: flex; gap: 3px; }
+.testi-featured-author { display: flex; align-items: center; gap: 14px; }
+.testi-featured-context {
+  font-size: 11px; color: var(--text-3); letter-spacing: 0.06em;
+  padding-top: 12px; border-top: 1px solid var(--border);
+}
+
+/* Keep legacy classes used by avatar, meta, li */
 .testi-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: grid; place-items: center; font-size: 13px; font-weight: 800; font-family: var(--font-mono); }
-.testi-meta { flex: 1; }
+.testi-avatar--lg { width: 48px; height: 48px; font-size: 15px; }
+.testi-meta { flex: 1; min-width: 0; }
 .testi-name     { font-size: 13.5px; font-weight: 700; }
-.testi-role     { font-size: 11px; color: var(--text-3); margin-top: 1px; display: block; font-family: var(--font-mono); }
-.testi-relation { font-size: 10.5px; color: var(--text-3); margin-top: 1px; display: block; font-family: var(--font-mono); }
+.testi-role     { font-size: 11px; color: var(--text-3); margin-top: 2px; display: block; font-family: var(--font-mono); }
+.testi-relation { font-size: 10.5px; color: var(--text-3); margin-top: 2px; display: block; font-family: var(--font-mono); }
 .testi-li { width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; display: grid; place-items: center; background: var(--surface-3); border: 1px solid var(--border); color: var(--text-2); transition: border-color .15s, color .15s; }
 .testi-li:hover { border-color: var(--accent-line); color: var(--accent); }
+
+@media (max-width: 600px) {
+  .testi-featured { padding: 24px 20px; }
+  .testi-featured-text { font-size: 15px; }
+  .testi-featured-author { flex-wrap: wrap; }
+}
 
 /* ============================================================
    EDUCATION
