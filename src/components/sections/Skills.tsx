@@ -1,172 +1,64 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Code, LineChart, Sparkles } from 'lucide-react';
-import TechIcon from '../ui/TechIcon';
-import ScrollReveal from '../scroll/ScrollReveal';
+import React, { useEffect, useRef } from 'react';
 
-const Skills: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 0.8', 'center center'],
+function useReveal(ref: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    if (!ref.current) return;
+    const els = ref.current.querySelectorAll<HTMLElement>('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(e => io.observe(e));
+    return () => io.disconnect();
   });
+}
 
-  const technicalSkills = [
-    { name: 'React Native', percentage: 90 },
-    { name: 'JavaScript/TypeScript', percentage: 85 },
-    { name: 'React.js/Next.js', percentage: 85 },
-    { name: 'Tailwind CSS', percentage: 80 },
-    { name: 'Vue.js', percentage: 60 },
-  ];
+function CpuIcon() { return <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>; }
+function LayersIcon() { return <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg>; }
+function ShieldIcon() { return <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>; }
+function TestIcon() { return <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M9 3h6M10 3v5l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/><path d="M7 14h10"/></svg>; }
+function ToolIcon() { return <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M14 7a4 4 0 00-5 5l-6 6 3 3 6-6a4 4 0 005-5l-3 3-3-3 3-3z"/></svg>; }
 
-  const professionalSkills = [
-    { name: 'Problem Solving', percentage: 95 },
-    { name: 'Team Collaboration', percentage: 90 },
-    { name: 'Communication', percentage: 88 },
-    { name: 'Project Management', percentage: 85 },
-    { name: 'Agile Development', percentage: 90 },
-  ];
+const ICONS: Record<string, React.ReactNode> = {
+  cpu: <CpuIcon />, layers: <LayersIcon />, shield: <ShieldIcon />, test: <TestIcon />, tool: <ToolIcon />,
+};
 
-  const techStack = [
-    { name: 'JavaScript', icon: 'js' },
-    { name: 'React', icon: 'react' },
-    { name: 'React Native', icon: 'reactnative' },
-    { name: 'Vue.js', icon: 'vue' },
-    { name: 'Tailwind', icon: 'tailwind' },
-    { name: 'Git', icon: 'git' },
-  ];
+const GROUPS = [
+  ['cpu', 'Core', ['React Native', 'React', 'TypeScript', 'JavaScript ES6+']],
+  ['layers', 'State Management', ['Redux Toolkit', 'Redux-Saga']],
+  ['shield', 'Auth & APIs', ['OKTA OAuth 2.0', 'REST', 'GraphQL', 'Axios', 'Firebase / FCM']],
+  ['test', 'Testing', ['Appium', 'Mocha', 'Sauce Labs', 'Crashlytics', 'E2E']],
+  ['tool', 'Tools', ['Xcode', 'Android Studio', 'Git', 'GitLab', 'JIRA', 'Figma', 'Confluence']],
+] as const;
 
-  const SkillBar: React.FC<{ skill: { name: string; percentage: number }; index: number }> = ({
-    skill,
-    index,
-  }) => {
-    const width = useTransform(
-      scrollYProgress,
-      [0, 0.6 + index * 0.05],
-      [0, skill.percentage]
-    );
-    const displayWidth = useTransform(width, (v) => `${v}%`);
-
-    return (
-      <div className="mb-6 last:mb-0">
-        <div className="flex justify-between mb-2">
-          <span className="font-medium text-gray-200 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary-500"></span>
-            {skill.name}
-          </span>
-          <span className="text-primary-400 font-mono text-sm">{skill.percentage}%</span>
-        </div>
-        <div className="h-2.5 rounded-full bg-white/5 border border-white/5 overflow-hidden backdrop-blur-sm">
-          <motion.div
-            className="h-full rounded-full relative"
-            style={{
-              width: displayWidth,
-              background: 'linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa)',
-              boxShadow: '0 0 10px rgba(99, 102, 241, 0.4)'
-            }}
-          >
-            {/* Shimmer effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-full animate-[shimmer_2s_infinite]"></div>
-          </motion.div>
-        </div>
-      </div>
-    );
-  };
+export default function Skills() {
+  const root = useRef<HTMLElement>(null);
+  useReveal(root);
 
   return (
-    <section id="skills" ref={sectionRef} className="py-20 bg-[#0b0b1e] relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-900/10 blur-[120px] rounded-full"></div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <ScrollReveal direction="up">
-          <div className="text-center mb-16">
-            <h2 className="section-title">
-              My <span className="gradient-text">Skills</span>
-            </h2>
-            <div className="section-divider opacity-50"></div>
-          </div>
-        </ScrollReveal>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          {/* Technical Skills */}
-          <ScrollReveal direction="left" delay={0.1}>
-            <div className="glass-card p-8 hover:bg-white/5 transition-colors duration-500 group relative overflow-hidden">
-              <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl group-hover:bg-primary-500/20 transition-all duration-500"></div>
-
-              <h3 className="text-2xl font-bold mb-8 flex items-center text-white">
-                <div className="w-10 h-10 rounded-lg bg-primary-500/20 flex items-center justify-center mr-4 text-primary-400 group-hover:scale-110 transition-transform duration-300">
-                  <Code size={20} />
-                </div>
-                Technical Skills
-              </h3>
-              <div className="space-y-2">
-                {technicalSkills.map((skill, index) => (
-                  <SkillBar key={index} skill={skill} index={index} />
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Professional Skills */}
-          <ScrollReveal direction="right" delay={0.2}>
-            <div className="glass-card p-8 hover:bg-white/5 transition-colors duration-500 group relative overflow-hidden">
-              <div className="absolute -right-10 -top-10 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl group-hover:bg-secondary-500/20 transition-all duration-500"></div>
-
-              <h3 className="text-2xl font-bold mb-8 flex items-center text-white">
-                <div className="w-10 h-10 rounded-lg bg-secondary-500/20 flex items-center justify-center mr-4 text-secondary-400 group-hover:scale-110 transition-transform duration-300">
-                  <LineChart size={20} />
-                </div>
-                Professional Skills
-              </h3>
-              <div className="space-y-2">
-                {professionalSkills.map((skill, index) => (
-                  <SkillBar key={index} skill={skill} index={index} />
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+    <section id="skills" className="section-pad" ref={root}>
+      <div className="wrap">
+        <div className="section-head reveal">
+          <p className="eyebrow">02 — Skills</p>
+          <h2>The stack I reach for</h2>
+          <p className="sub">A toolkit tuned for secure, high-performance mobile delivery — from core framework work to authentication, testing and release.</p>
         </div>
-
-        {/* Tech Stack */}
-        <div className="mt-16">
-          <ScrollReveal direction="up">
-            <div className="flex flex-col items-center mb-12">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center mb-4 shadow-lg shadow-primary-500/30">
-                <Sparkles size={20} className="text-white" />
+        <div className="skills-grid">
+          {GROUPS.map(([ic, title, items], i) => (
+            <div className={'skill-card card reveal' + (i === 0 ? ' skill-card--wide' : '')} data-d={(i % 4) + 1} key={title}>
+              <div className="skill-top">
+                <span className="skill-ic">{ICONS[ic]}</span>
+                <h3>{title}</h3>
+                <span className="skill-count mono">{String(items.length).padStart(2, '0')}</span>
               </div>
-              <h3 className="text-2xl font-bold text-center text-white">
-                My Tech Stack
-              </h3>
+              <div className="skill-chips">
+                {items.map(s => <span className="chip" key={s}>{s}</span>)}
+              </div>
             </div>
-          </ScrollReveal>
-
-          <div className="flex flex-wrap justify-center gap-5 sm:gap-6">
-            {techStack.map((tech, index) => (
-              <ScrollReveal
-                key={index}
-                direction="zoom"
-                delay={index * 0.08}
-              >
-                <div className="group flex flex-col items-center justify-center p-6 w-32 h-32 sm:w-36 sm:h-36 cursor-pointer relative rounded-2xl border border-white/10 bg-white/[0.06] backdrop-blur-sm transition-all duration-300 hover:border-primary-500/40 hover:bg-white/[0.08] hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.35)] hover:-translate-y-1">
-                  {/* Soft glow behind icon on hover */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 to-secondary-500/0 group-hover:from-primary-500/10 group-hover:to-secondary-500/5 transition-all duration-300 pointer-events-none" />
-                  <TechIcon
-                    name={tech.icon}
-                    className="relative z-10 text-4xl sm:text-5xl mb-3 text-gray-500 group-hover:text-white transition-all duration-300 group-hover:scale-110"
-                  />
-                  <span className="relative z-10 text-sm font-medium text-gray-400 group-hover:text-white transition-colors duration-300">
-                    {tech.name}
-                  </span>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Skills;
+}

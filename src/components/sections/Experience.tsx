@@ -1,106 +1,101 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import ExperienceCard from '../ui/ExperienceCard';
-import ScrollReveal from '../scroll/ScrollReveal';
+import React, { useEffect, useRef } from 'react';
 
-const Experience: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start 0.7', 'end 0.8'],
+function useReveal(ref: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    if (!ref.current) return;
+    const els = ref.current.querySelectorAll<HTMLElement>('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(e => io.observe(e));
+    return () => io.disconnect();
   });
+}
 
-  // Timeline bar fills as you scroll through the section
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+function CheckIcon() { return <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 4 }}><path d="M5 12l5 5L20 6"/></svg>; }
 
-  const experiences = [
-    {
-      title: 'System Engineer - C1',
-      company:
-        'TCS India Pvt. Ltd. - Pune, India (Client: Toyota Financial Services)',
-      period: '01/2023 - Current',
-      points: [
-        'Led and participated in business requirements gathering and analysis. Created specifications including functional and non-functional requirements.',
-        'Created architecture documents, including use case model, analysis model, structural diagrams based on consolidated requirements.',
-        'Conducted knowledge transfer sessions to team members and clients.',
-        'Mentored junior developers, conducting code reviews and providing technical guidance.',
-        'Proved successful working within tight deadlines and a fast-paced atmosphere.',
-      ],
-      isLeft: true,
-    },
-    {
-      title: 'React Native Developer',
-      company:
-        'Dev Story Pvt. Ltd. - Chandigarh, India (Client: Guard Tech)',
-      period: '06/2021 - 11/2022',
-      points: [
-        'Offshore UI lead for implementing hybrid apps for America one of the Enterprise.',
-        'Optimized frontend performance by implementing techniques such as lazy loading, code splitting, and caching.',
-        'Created architecture documents, including use case model, analysis model, structural diagrams.',
-        'Proved successful working within tight deadlines and a fast-paced atmosphere.',
-        'Reviewed code, debugged problems, and corrected issues.',
-      ],
-      isLeft: false,
-    },
-    {
-      title: 'Trainee Software Engineer',
-      company:
-        'Mantra Labs Pvt. Ltd. - Bangalore, India (Client: Globalise)',
-      period: '03/2021 - 06/2021',
-      points: [
-        'Offshore UI lead for implementing hybrid apps.',
-        'Led and participated in business requirements gathering and analysis.',
-        'Created architecture documents, including use case model, analysis model, structural diagrams.',
-        'Proficient in frontend technologies and frameworks such as React, React Native, HTML5, CSS3, and JavaScript ES6+.',
-      ],
-      isLeft: true,
-    },
-  ];
+const ROLES = [
+  {
+    company: 'Tata Consultancy Services (TCS)',
+    role: 'System Engineer — Frontend Lead',
+    period: 'Jan 2023 — Present',
+    now: true,
+    summary: 'Leading React Native frontend for enterprise BFSI clients, owning architecture, code quality and release readiness.',
+    points: [
+      'Lead the mobile frontend for a multi-tenant auto-finance platform serving enterprise clients.',
+      'Drove a 45% faster app startup and a 38% drop in crash rate through profiling and architecture work.',
+      'Mentor engineers and set standards for state management, testing and CI release flow.',
+    ],
+    stack: ['React Native', 'TypeScript', 'Redux Toolkit', 'OKTA OAuth 2.0', 'GraphQL'],
+  },
+  {
+    company: 'Dev Story Pvt. Ltd.',
+    role: 'React Native Developer',
+    period: 'Jun 2021 — Nov 2022',
+    now: false,
+    summary: 'Built and shipped production cross-platform apps across fintech and social products.',
+    points: [
+      'Delivered features end-to-end across iOS and Android with a shared React Native codebase.',
+      'Expanded supported device coverage by 70% via responsive layouts and rigorous QA.',
+      'Integrated REST/GraphQL APIs, push notifications (FCM) and secure auth flows.',
+    ],
+    stack: ['React Native', 'Redux-Saga', 'REST', 'Firebase / FCM', 'Appium'],
+  },
+  {
+    company: 'Mantra Labs',
+    role: 'Trainee Software Engineer',
+    period: 'Mar 2021 — Jun 2021',
+    now: false,
+    summary: 'Started my mobile career building UI components and learning production engineering practices.',
+    points: [
+      'Built reusable React Native UI components and screens to design spec.',
+      'Learned Git workflows, code review and agile delivery on a live product team.',
+    ],
+    stack: ['React Native', 'JavaScript ES6+', 'Git', 'Figma'],
+  },
+];
+
+export default function Experience() {
+  const root = useRef<HTMLElement>(null);
+  useReveal(root);
 
   return (
-    <section
-      id="experience"
-      ref={sectionRef}
-      className="py-20 bg-[#0a0a1a] relative overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <ScrollReveal direction="up">
-          <div className="text-center mb-24">
-            <h2 className="section-title">
-              Work <span className="gradient-text">Experience</span>
-            </h2>
-            <div className="section-divider opacity-50"></div>
-          </div>
-        </ScrollReveal>
-
-        <div className="relative">
-          {/* Timeline bar — fills progressively with scroll */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[2px] bg-white/5 transform -translate-x-1/2 rounded-full overflow-hidden">
-            <motion.div
-              className="absolute top-0 left-0 w-full rounded-full"
-              style={{
-                height: lineHeight,
-                background:
-                  'linear-gradient(to bottom, #6366f1, #8b5cf6, #a78bfa)',
-                boxShadow: '0 0 15px #6366f1'
-              }}
-            />
-          </div>
-
-          {experiences.map((exp, index) => (
-            <ScrollReveal
-              key={index}
-              direction={exp.isLeft ? 'left' : 'right'}
-              delay={index * 0.15}
-            >
-              <ExperienceCard experience={exp} index={index} />
-            </ScrollReveal>
+    <section id="experience" className="section-pad" ref={root}>
+      <div className="wrap">
+        <div className="section-head reveal">
+          <p className="eyebrow">03 — Experience</p>
+          <h2>Four years, shipping in production</h2>
+        </div>
+        <div className="timeline">
+          {ROLES.map((r, i) => (
+            <div className="tl-item reveal" data-d={Math.min(i + 1, 3)} key={r.company}>
+              <div className="tl-marker">
+                <span className={r.now ? 'live' : ''} />
+              </div>
+              <div className="tl-card card">
+                <div className="tl-head">
+                  <div>
+                    <h3>{r.role}</h3>
+                    <p className="tl-company">{r.company}</p>
+                  </div>
+                  <span className={'tl-period mono' + (r.now ? ' tl-now' : '')}>{r.period}</span>
+                </div>
+                <p className="tl-summary">{r.summary}</p>
+                <ul className="tl-points">
+                  {r.points.map((p, j) => (
+                    <li key={j}><CheckIcon /><span>{p}</span></li>
+                  ))}
+                </ul>
+                <div className="tl-stack">
+                  {r.stack.map(s => <span className="chip" key={s}>{s}</span>)}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Experience;
+}
