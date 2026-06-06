@@ -8,7 +8,6 @@ import Experience from './components/sections/Experience';
 import Projects from './components/sections/Projects';
 import MobileShowcase from './components/sections/MobileShowcase';
 import Achievements from './components/sections/Achievements';
-import OpenSource from './components/sections/OpenSource';
 import Testimonials from './components/sections/Testimonials';
 import Education from './components/sections/Education';
 import Contact from './components/sections/Contact';
@@ -26,7 +25,6 @@ function App() {
         <Projects />
         <MobileShowcase />
         <Achievements />
-        <OpenSource />
         <Testimonials />
         <Education />
         <Contact />
