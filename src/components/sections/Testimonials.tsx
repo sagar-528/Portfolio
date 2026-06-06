@@ -70,7 +70,7 @@ export default function Testimonials() {
     <section id="testimonials" className="section-pad" ref={root}>
       <div className="wrap">
         <div className="section-head reveal">
-          <p className="eyebrow">08 — Testimonials</p>
+          <p className="eyebrow">07 — Testimonials</p>
           <h2>What teammates say</h2>
           <p className="sub">
             Perspectives from engineering managers and colleagues across BFSI products.

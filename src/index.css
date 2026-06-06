@@ -889,9 +889,11 @@ body.preloading { overflow: hidden; }
 }
 .stat-card--lead { grid-column: span 3; }
 .stats-grid .stat-card:nth-child(2) { grid-column: span 3; }
-.stat-card:hover {
-  transform: translateY(-4px); border-color: var(--accent-line);
-  box-shadow: 0 24px 60px -20px rgba(139,92,246,0.20);
+@media (hover: hover) and (pointer: fine) {
+  .stat-card:hover {
+    transform: translateY(-4px); border-color: var(--accent-line);
+    box-shadow: 0 24px 60px -20px rgba(139,92,246,0.20);
+  }
 }
 .stat-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .stat-ic {
@@ -908,7 +910,11 @@ body.preloading { overflow: hidden; }
 .stat-sub { font-size: 11.5px; color: var(--text-3); margin: 2px 0 16px; font-family: var(--font-mono); }
 .stat-bar { height: 4px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow: hidden; margin-top: auto; }
 .stat-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 1.5s var(--ease); }
-@media (max-width: 880px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .stat-card, .stat-card--lead, .stats-grid .stat-card:nth-child(2) { grid-column: span 1; } }
+@media (max-width: 880px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-card, .stat-card--lead, .stats-grid .stat-card:nth-child(2) { grid-column: span 1; }
+  .stats-grid .stat-card:last-child:nth-child(odd) { grid-column: span 2; }
+}
 @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr; } }
 
 /* ============================================================
@@ -960,8 +966,11 @@ body.preloading { overflow: hidden; }
   display: flex; flex-direction: column; gap: 16px; padding: 28px;
   border-top: 2px solid var(--testi-color, var(--accent));
   transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+  height: 100%;
 }
-.testi-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px -16px rgba(0,0,0,0.4); }
+@media (hover: hover) and (pointer: fine) {
+  .testi-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px -16px rgba(0,0,0,0.4); }
+}
 .testi-top { display: flex; justify-content: space-between; align-items: flex-start; }
 .testi-quote { display: flex; color: var(--testi-color, var(--accent)); opacity: 0.55; }
 .testi-stars { display: flex; gap: 2px; color: var(--testi-color, var(--accent)); }

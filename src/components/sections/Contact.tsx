@@ -38,7 +38,7 @@ export default function Contact() {
         <div className="contact-glow" />
       </div>
       <div className="wrap contact-inner">
-        <p className="eyebrow reveal">10 — Contact</p>
+        <p className="eyebrow reveal">09 — Contact</p>
         <h2 className="contact-h reveal" data-d="1">Let's build something<br />reliable together.</h2>
         <p className="contact-sub reveal" data-d="2">
           Open to senior React Native roles and consulting in the BFSI space. The fastest way to reach me is email.
