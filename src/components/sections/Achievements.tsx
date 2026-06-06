@@ -91,7 +91,7 @@ export default function Achievements() {
     <section id="impact" className="section-pad impact-sec" ref={root}>
       <div className="wrap">
         <div className="section-head reveal">
-          <p className="eyebrow">05 — Key achievements</p>
+          <p className="eyebrow">06 — Key achievements</p>
           <h2>Outcomes, measured</h2>
           <p className="sub">The numbers that matter to a product team — performance, stability and reach.</p>
         </div>

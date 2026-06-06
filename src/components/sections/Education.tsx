@@ -32,7 +32,7 @@ export default function Education() {
       <div className="wrap">
         <div className="edu reveal card">
           <div className="edu-left">
-            <p className="eyebrow">06 — Education</p>
+            <p className="eyebrow">09 — Education</p>
             <h2 className="edu-h">B.Tech, Computer Science</h2>
             <p className="edu-school">Rajarshi Chhatrapati Shahu Maharaj Polytechnic Institute of Technology (RCPIT), Maharashtra</p>
           </div>

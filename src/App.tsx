@@ -6,7 +6,10 @@ import About from './components/sections/About';
 import Skills from './components/sections/Skills';
 import Experience from './components/sections/Experience';
 import Projects from './components/sections/Projects';
+import MobileShowcase from './components/sections/MobileShowcase';
 import Achievements from './components/sections/Achievements';
+import OpenSource from './components/sections/OpenSource';
+import Testimonials from './components/sections/Testimonials';
 import Education from './components/sections/Education';
 import Contact from './components/sections/Contact';
 
@@ -21,7 +24,10 @@ function App() {
         <Skills />
         <Experience />
         <Projects />
+        <MobileShowcase />
         <Achievements />
+        <OpenSource />
+        <Testimonials />
         <Education />
         <Contact />
       </main>

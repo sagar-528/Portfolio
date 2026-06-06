@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 const LINKS = [
-  ['About', 'about'], ['Skills', 'skills'], ['Experience', 'experience'],
-  ['Work', 'projects'], ['Impact', 'impact'], ['Contact', 'contact'],
+  ['About',       'about'],
+  ['Skills',      'skills'],
+  ['Experience',  'experience'],
+  ['Work',        'projects'],
+  ['Engineering', 'showcase'],
+  ['Impact',      'impact'],
+  ['Contact',     'contact'],
 ] as const;
 
 function scrollTo(id: string) {
